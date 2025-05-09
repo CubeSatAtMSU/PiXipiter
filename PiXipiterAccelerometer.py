@@ -10,7 +10,7 @@ import math
 
 i2c = busio.I2C(board.SCL, board.SDA)
 
-# GPIO Setups for LED
+# GPIO Setups for LED test
 GPIO.setmode(GPIO.BCM)
 # led_pin = (Decide which pin is led pin)
 # GPIO.setup(led_pin, GPIO.OUT, initial=GPIO.LOW)
