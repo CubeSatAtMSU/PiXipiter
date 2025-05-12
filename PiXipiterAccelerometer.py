@@ -11,7 +11,7 @@ import math
 i2c = busio.I2C(board.SCL, board.SDA)
 
 # GPIO Setups for LED test
-GPIO.setmode(GPIO.BCM)
+#GPIO.setmode(GPIO.BCM)
 # led_pin = (Decide which pin is led pin)
 # GPIO.setup(led_pin, GPIO.OUT, initial=GPIO.LOW)
 
@@ -25,18 +25,17 @@ GPIO.setmode(GPIO.BCM)
 
 
 accelerometer = adafruit_adxl34x.ADXL343(i2c)
-data_file = open("file_name.txt", "w")
+data_file = open("/home/xipiter/PiXipiter/file_name.txt", "a+")
 
 while True:
     x,y,z = accelerometer.acceleration # Assigns individual vector components of acceleration
     magAcc = math.sqrt(x**2 + y**2 + z**2) # Magnitude of acceleration
-    if magAcc > 5 : # Checks if accelerometer is working for status LED pin
-        GPIO.output(led_pin, GPIO.HIGH)
-    else: 
-        GPIO.output(led_pin, GPIO.LOW)
-
+    
+    t = time.localtime()
+    current_time = time.strftime("%H:%M:%S", t)
+    data_file.write(str(magAcc) + "   "  + current_time + '\n') # Print it to file
     print("%f" %magAcc) # Print it to test
-    data_file.write(str(magAcc) + '\n') # Print it to file
+    print(current_time)
     data_file.flush()
     time.sleep(0.1) # 0.1 Seconds
     
